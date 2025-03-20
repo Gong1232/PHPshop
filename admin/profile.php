@@ -1,2 +1,7 @@
 <!DOCTYPE html>
-<html></html>
+<html>
+
+<body>
+    
+</body>
+</html>
