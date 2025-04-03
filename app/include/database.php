@@ -6,7 +6,7 @@
 class Database {
     // Database credentials (should be in environment variables in production)
     private $host = 'localhost';
-    private $db_name = 'php_shop';
+    private $db_name = 'phpshop';
     private $username = 'root';
     private $password = '123456';
     private $conn;

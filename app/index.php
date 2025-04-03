@@ -4,7 +4,7 @@ require 'include/base.php';
 // Set page title
 $_title = 'Home - PHPShop';
 
-// Include database connection
+// Database connection
 $db = Base::getDB();
 
 // Get featured products
@@ -16,17 +16,16 @@ try {
     $featured_products = [];
 }
 
-// Include header
 include 'include/header.php';
 ?>
 
 <main class="home-page">
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero">  
         <div class="container">
             <h1>Welcome to PHPShop</h1>
             <p>Discover amazing products at great prices</p>
-            <a href="/products" class="btn btn-primary">Shop Now</a>
+            <a href="include/check-auth.php?redirect=products" class="btn btn-primary">Shop Now</a>
         </div>
     </section>
 
@@ -38,11 +37,11 @@ include 'include/header.php';
                 <?php if (!empty($featured_products)): ?>
                     <?php foreach ($featured_products as $product): ?>
                         <div class="product-card">
-                            <img src="/uploads/products/<?= htmlspecialchars($product['image_path'] ?? 'default.jpg') ?>" 
-                                 alt="<?= htmlspecialchars($product['name']) ?>">
-                            <h3><?= htmlspecialchars($product['name']) ?></h3>
+                            <img src="/uploads/products/<?= Base::sanitize($product['image_path'] ?? 'default.jpg') ?>"
+                                alt="<?= Base::sanitize($product['name']) ?>">
+                            <h3><?= Base::sanitize($product['name']) ?></h3>
                             <p class="price">$<?= number_format($product['price'], 2) ?></p>
-                            <a href="/product.php?id=<?= $product['product_id'] ?>" class="btn btn-secondary">View Details</a>
+                            <a href="product/product.php?id=<?= $product['product_id'] ?>" class="btn btn-secondary">View Details</a>
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
@@ -61,7 +60,7 @@ include 'include/header.php';
                 $categories = $db->query("SELECT * FROM categories LIMIT 4")->fetchAll();
                 foreach ($categories as $category): ?>
                     <a href="/products.php?category=<?= $category['category_id'] ?>" class="category-card">
-                        <h3><?= htmlspecialchars($category['name']) ?></h3>
+                        <h3><?= Base::sanitize($category['name']) ?></h3>
                     </a>
                 <?php endforeach; ?>
             </div>
@@ -69,6 +68,4 @@ include 'include/header.php';
     </section>
 </main>
 
-<?php
-// Include footer
-include 'include/footer.php';
+<?php include 'include/footer.php'; ?>
